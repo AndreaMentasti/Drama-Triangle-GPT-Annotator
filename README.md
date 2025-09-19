@@ -62,7 +62,13 @@ Here four examples of tweets assigned to the above labels:
 | It's funny, I've a friend who is more right winged than I am, but he still believes there's such thing as Global Warming.  Go figure.      | ❌deny            |
 | The fact that we aren’t doing enough to challenge climate change effects EVERYBODY. But it effects Black people the most                   | ✅relevant         |
 
-`Here we could provide the prompt:`
+Below is a sample prompt configuration for classifying tweets about US climate change discourse. It defines a system role and instructs GPT to return a JSON output with a single key `"r"`.
+
+
+```json
+{
+  "SYSTEM_MESSAGE": "You are an average US citizen. The user will provide the content of a tweet posted from the US.\nYour task is to analyze the tweet within the context of US political discourse, particularly in relation to climate change. Respond in JSON format.\n\n1. Relevance Check: Analyze the tweet in the context of US climate change discussion and determine its relevance. Provide one of the following values:\n   - 0 (irrelevant): If the tweet does not discuss climate change in a meaningful way. For example, if it only includes a hashtag (like #climatechange) or a passing reference but does not engage in any discussion about climate change or related policies, it should be considered irrelevant.\n   - 1 (assert): If the tweet asserts the existence of climate change but does not engage with specific policies or actions related to it. This includes tweets that acknowledge climate change as an issue without going deeper into details.\n   - 2 (deny): If the tweet denies the existence or severity of man-made climate change, referring to it as a hoax, scam, or fraud, or using sarcasm or language that undermines the reality of climate change.\n   - 3 (relevant): If the tweet discusses climate change or related policies in a substantive way. This includes any tweet that debates, critiques, or supports policies or actions related to climate change, as well as conversations on how to combat or adapt to climate change.\n\nRespond in JSON format, returning the value in the key \"r\".\n"
+}
 
 #### b) Detect characters and role
 E.g., once selected the characters, the next step is to instruct the LLM to identify them in the texts, and frame them into one of the three (+ one) roles: `Hero | Victim | Villain | Neutral`. Notice that amongst the labels we also decided to include the Neutral role to account for contexts in which the character doesn't fit in any of the other roles.
