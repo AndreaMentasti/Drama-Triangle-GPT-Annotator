@@ -11,7 +11,8 @@ In practice, this package provides an interface to the OpenAI API for text class
 
 This repository works as a guide for practitioners and researchers who want to analyze narratives in a different way than just counting keywords or identifying topics. By focusing on how characters are framed as heroes, villains, or victims, it enables systematic exploration of the dynamics of blame, praise, and responsibility in text data. This approach provides richer insights into how stories are constructed and how they shape public opinion, political debate, and social conflict.
 
-We provide here the steps to correctly frame the implementation of this framework: from **1** defining the topic of interest, to **2** specifying the set of characters, to selecting the extraction methodology, and finally to applying prompts for annotation. Each step is documented with guidance and examples, so that users can adapt the framework to their own texts and research questions.
+We provide here the steps to correctly frame the implementation of this framework: from **1)** defining the topic of interest, to **2)** selecting the extraction methodology, to **3)** specifying the set of characters, and finally to **4)** applying prompts for annotation. 
+Each step is documented with guidance and examples, so that users can adapt the framework to their own texts and research questions.
 
 ---
 
