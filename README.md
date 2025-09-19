@@ -16,22 +16,22 @@ Each step is documented with guidance and examples, so that users can adapt the 
 
 ---
 
-## 1) Topic selection
-🔍 A well-defined topic is a prerequisite for a fruitful narrative analysis. The clearer the topic, the more straightforward the identification of relevant characters and the exploration of the research question. When deciding which topic to select, the researcher must consider the research question, data availabilty, and the available resources. It is also important to consider the trade-off between specificity and generalizability. A very specific topic can make it difficult to define clear characters or identify enough relevant narratives, while a topic that is too broad may make it hard to narrow down the analysis to a manageable set of characters.
+## 1) Topic selection 🔍
+A well-defined topic is a prerequisite for a fruitful narrative analysis. The clearer the topic, the more straightforward the identification of relevant characters and the exploration of the research question. When deciding which topic to select, the researcher must consider the research question, data availabilty, and the available resources. It is also important to consider the trade-off between specificity and generalizability. A very specific topic can make it difficult to define clear characters or identify enough relevant narratives, while a topic that is too broad may make it hard to narrow down the analysis to a manageable set of characters.
 
 E.g. in *Gehring & Grigoletto (2025)*, we analyze the political economy of climate change. Starting from the relevant literature we found two dominant discussions: scientific evidence on climate change and policy responses. Since our focus lies with the domain of political economy, we concentrate on climate change policies, deliberately excluding debates on the scientific reality and predictability of climate change.
 
 ---
 
-## 2) Identifying data sources and extracting data
-💻 After selecting the topic, the next step consists in gathering data. Common sources include digitized newspapers, social media, transcribed TV/radio/YouTube, and open ended survey responses. When selecting the data source, it is important to focus on the media channels where narratives about the chosen topic are most prominent. Regarding data extraction, the chosen data source will determine which methodologies can be used to retrieve the relevant text snippets.
+## 2) Identifying data sources and extracting data💻 
+After selecting the topic, the next step consists in gathering data. Common sources include digitized newspapers, social media, transcribed TV/radio/YouTube, and open ended survey responses. When selecting the data source, it is important to focus on the media channels where narratives about the chosen topic are most prominent. Regarding data extraction, the chosen data source will determine which methodologies can be used to retrieve the relevant text snippets.
 
 E.g., our focus is on narratives about climate change policies in the United States, collected from the social media platform Twitter . We specifically choose the U.S. due to the significant role Twitter plays in shaping and disseminating political narratives there. The data collection process involves querying the Twitter historical APIv2 with a set of keywords adapted from *Oehl, Schaffer, and Bernauer (2017)*.
 
 ---
 
-## 3) Identify relevant characters
-👥 The third step represents a critical stage in the pipeline, centered on identifying relevant characters within the topic. Character selection is primarily guided by the research question and the researcher's analytical focus. However, it is crucial to balance the scope of selection with practical considerations: expanding the set of characters too broadly can complicate prediction accuracy and increase computational demands, while a more focused selection ensures greater reliability and interpretability of results.\
+## 3) Identify relevant characters 👥 
+The third step represents a critical stage in the pipeline, centered on identifying relevant characters within the topic. Character selection is primarily guided by the research question and the researcher's analytical focus. However, it is crucial to balance the scope of selection with practical considerations: expanding the set of characters too broadly can complicate prediction accuracy and increase computational demands, while a more focused selection ensures greater reliability and interpretability of results.\
 Lastly, characters can be identified through various methods, including literature review, exploratory tools (topic modeling, entity recognition, RELATIO), and domain reading. 
 
 E.g., guided by the relevant literature, exploratory tools, and intensive domain reading, we pre-specify ten characters: five *human characters* (made of institutions and groups of individuals) and five *instrument characters* (policy tools and instruments):
@@ -42,9 +42,9 @@ Instrument Characters: `EMISSION PRICING | REGULATIONS | FOSSIL INDUSTRY | GREEN
 
 ---
 
-## 4) Prompt design (draft templates)
+## 4) Prompt design (draft templates) 📝 
 
-📝: The fourth step involves designing an effective prompt to instruct the AI model. Prompt engineering is a crucial part of the pipeline, as the quality of the prompt directly affects the accuracy and consistency of the model's responses. We recommend designing the prompt with the assistance of the same model that will later annotate the text. In this case we suggest to use GPT-40 via OpenAI's ChatGPT to be consistent with the model used in this Python package. 
+The fourth step involves designing an effective prompt to instruct the AI model. Prompt engineering is a crucial part of the pipeline, as the quality of the prompt directly affects the accuracy and consistency of the model's responses. We recommend designing the prompt with the assistance of the same model that will later annotate the text. In this case we suggest to use GPT-40 via OpenAI's ChatGPT to be consistent with the model used in this Python package. 
 
 This package allows to `a) mark a text as relevant` and `b) detect characters and assign them to a role`. 
 
@@ -71,8 +71,8 @@ E.g., once selected the characters, the next step is to instruct the LLM to iden
 
 ---
 
-## 5) Obtaining the predictions - DT GPT Annotator
-📊 The final step of the pipeline consists of obtaining predictions for each text. This is the step where this package comes at use. After designing the prompts, now the last step before the analysis is that of obtaining the predictions from the LLM. This process uses OpenAI API to process every text in the dataset with GPT-40-mini, applying the same prompt consistently across all observations. Conceptually, the annotation process can be understood as the OpenAI API acting as a classification engine, taking in specific inputs and generating structured outputs.
+## 5) Obtaining the predictions - DT GPT Annotator 📊 
+The final step of the pipeline consists of obtaining predictions for each text. This is the step where this package comes at use. After designing the prompts, now the last step before the analysis is that of obtaining the predictions from the LLM. This process uses OpenAI API to process every text in the dataset with GPT-40-mini, applying the same prompt consistently across all observations. Conceptually, the annotation process can be understood as the OpenAI API acting as a classification engine, taking in specific inputs and generating structured outputs.
 
 #### INPUTS:
 
