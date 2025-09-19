@@ -42,7 +42,7 @@ Instrument Characters: `EMISSION PRICING | REGULATIONS | FOSSIL INDUSTRY | GREEN
 
 ---
 
-## 4) Prompt design (draft templates) 📝 
+## 4) Prompt design 📝 
 
 The fourth step involves designing an effective prompt to instruct the AI model. Prompt engineering is a crucial part of the pipeline, as the quality of the prompt directly affects the accuracy and consistency of the model's responses. We recommend designing the prompt with the assistance of the same model that will later annotate the text. In this case we suggest to use GPT-40 via OpenAI's ChatGPT to be consistent with the model used in this Python package. 
 
@@ -71,7 +71,9 @@ Below is a sample prompt configuration for classifying tweets about US climate c
 ```
 
 #### b) Detect characters and role
-E.g., once selected the characters, the next step is to instruct the LLM to identify them in the texts, and frame them into one of the three (+ one) roles: `Hero | Victim | Villain | Neutral`. Notice that amongst the labels we also decided to include the Neutral role to account for contexts in which the character doesn't fit in any of the other roles. Below is a sample prompt for character and role recognition in the case of US climate change discourse.
+E.g., once selected the characters, the next step is to instruct the LLM to identify them in the texts, and frame them into one of the three (+ one) roles: `Hero | Victim | Villain | Neutral`. Notice that amongst the labels we also decided to include the Neutral role to account for contexts in which the character doesn't fit in any of the other roles.
+
+Below is a sample prompt for character and role recognition in the case of US climate change discourse.
 
 ```json
 {
