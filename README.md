@@ -11,7 +11,7 @@ In practice, this package provides an interface to the OpenAI API for text class
 
 📄: This repository works as a guide for practitioners and researchers who want to analyze narratives in a different way than just counting keywords or identifying topics. By focusing on how characters are framed as heroes, villains, or victims, it enables systematic exploration of more complex dynamics in text data.
 
-This repository outlines the key steps for implementing the framework: **1)** defining the topic of interest, **2)** selecting the extraction methodology, **3)** specifying the set of characters, and **4)** applying prompts for annotation. 
+This repository outlines the key steps for implementing the framework: **1)** select and define the topic, **2)** identify the source and extract data, **3)** identify relevant characters, **4)** prepare the prompt, and **5)** obtain predictions and assemble outputs. 
 Each step is documented with guidance and examples, so that users can adapt the framework to their own texts and research questions.
 
 ---
@@ -21,79 +21,62 @@ Each step is documented with guidance and examples, so that users can adapt the 
 
 E.g. in *Gehring & Grigoletto (2025)*, we analyze the political economy of climate change. Starting from the relevant literature we found two dominant discussions: scientific evidence on climate change and policy responses. Since our focus lies with the domain of political economy, we concentrate on climate change policies, deliberately excluding debates on the scientific reality and predictability of climate change.
 
-**Checklist**
-- [ ] Define scope (what’s in/out)  
-- [ ] Time window & language  
-- [ ] Sources (Twitter/X, newspapers, TV)  
-- [ ] Example positives/negatives
+---
+
+## 2) Identifying data sources and extracting data
+💻 After selecting the topic, the next step consists in gathering data. Common sources include digitized newspapers, social media, transcribed TV/radio/YouTube, and open ended survey responses. When selecting the data source, it is important to focus on the media channels where narratives about the chosen topic are most prominent. Regarding data extraction, the chosen data source will determine which methodologies can be used to retrieve the relevant text snippets.
+
+E.g., our focus is on narratives about climate change policies in the United States, collected from the social media platform Twitter . We specifically choose the U.S. due to the significant role Twitter plays in shaping and disseminating political narratives there. The data collection process involves querying the Twitter historical APIv2 with a set of keywords adapted from *Oehl, Schaffer, and Bernauer (2017)*.
 
 ---
 
-## 2) Character schema
-Characters are the entities you care about (people, orgs, parties, outlets).
+## 3) Identify relevant characters
+👥 The third step represents a critical stage in the pipeline, centered on identifying relevant characters within the topic. Character selection is primarily guided by the research question and the researcher's analytical focus. However, it is crucial to balance the scope of selection with practical considerations: expanding the set of characters too broadly can complicate prediction accuracy and increase computational demands, while a more focused selection ensures greater reliability and interpretability of results.\
+Lastly, characters can be identified through various methods, including literature review, exploratory tools (topic modeling, entity recognition, RELATIO), and domain reading. 
 
-**Schema draft**
-- **`character_id`**: stable key (e.g., `it_min_env`, `Greenpeace`, `John_Smith`)  
-- **`display_name`**: human-readable label  
-- **`aliases`**: list of names/handles (e.g., `@matteoXYZ`, “Ministry of Environment”)  
-- **`type`**: `person | org | party | outlet | other`  
-- **`notes`**: disambiguation tips for GPT (“If ‘Minister’ + ‘Environment’ in Italy → this character”)  
+E.g., guided by the relevant literature, exploratory tools, and intensive domain reading, we pre-specify ten characters: five *human characters* (made of institutions and groups of individuals) and five *instrument characters* (policy tools and instruments):
 
-> Store the schema in `data/characters.csv` or `data/characters.yaml` to keep prompts and results consistent.
+Human Characters: `DEVELOPING ECONOMIES | US DEMOCRATS | US REPUBLICANS | CORPORATIONS | US PEOPLE`
 
----
-
-## 3) Extraction methodologies
-Different levels of ambition; choose one or combine:
-
-### A. Presence detection (boolean)
-> “Is character **X** present in this text, considering aliases and context?”
-
-### B. Role classification
-> “If character **X** is present, what is their role relative to the **topic**?  
-> Options: `critic | supporter | neutral | none`.”
-
-### C. Open-class discovery (optional)
-> “List any **new characters** not in the schema (with short description).”
-
-**Quality controls**
-- deterministic prompts & temperature  
-- evaluation sets with human labels  
-- agreement metrics (precision/recall; Cohen’s κ)
+Instrument Characters: `EMISSION PRICING | REGULATIONS | FOSSIL INDUSTRY | GREEN TECH | NUCLEAR TECH`
 
 ---
 
 ## 4) Prompt design (draft templates)
 
-### Presence (per character)
+📝: The fourth step involves designing an effective prompt to instruct the AI model. Prompt engineering is a crucial part of the pipeline, as the quality of the prompt directly affects the accuracy and consistency of the model's responses. We recommend designing the prompt with the assistance of the same model that will later annotate the text. In this case we suggest to use GPT-40 via OpenAI's ChatGPT to be consistent with the model used in this Python package. 
 
+This package allows to `a) mark a text as relevant` and `b) detect characters and assign them to a role`. 
+
+#### a) Mark a text as relevant
+E.g., in the paper we are interested in using only the tweets that actually contributes to the political discourse regarding climate change policies, hence we are not interested in keeping tweets that are irrelevant, that assert climate change, or that deny it. In the prompt engineering phase, we provide detailed instructions to the LLM to assign a tweet to one of the four categories: 
+
+`irrelevant | assert | deny | relevant`
+
+Here four examples of tweets assigned to the above labels:
+
+| Tweet text                                                                                                                                 | Label              |
+|--------------------------------------------------------------------------------------------------------------------------------------------|--------------------|
+| She gimme hot head... I call it global warming                                                                                             | ❌irrelevant      |
+| Global Warming is really real                                                                                                              | ❌assert          |
+| It's funny, I've a friend who is more right winged than I am, but he still believes there's such thing as Global Warming.  Go figure.      | ❌deny            |
+| The fact that we aren’t doing enough to challenge climate change effects EVERYBODY. But it effects Black people the most                   | ✅relevant         |
+
+`Here we could provide the prompt:`
+
+#### b) Detect characters and role
+E.g., once selected the characters, the next step is to instruct the LLM to identify them in the texts, and frame them into one of the three (+ one) roles: `Hero | Victim | Villain | Neutral`. Notice that amongst the labels we also decided to include the Neutral role to account for contexts in which the character doesn't fit in any of the other roles.
+
+`Here we could provide the prompt:`
 
 ---
 
-## 5) Input formats
-Supported source types (planned):
-- **CSV**: `text`, optional `id`, `source`, `timestamp`
-- **JSONL**: one record per line with a `text` field
-- **Parquet**: same columns as CSV
+## 5) Obtaining the predictions - DT GPT Annotator
+📊 The final step of the pipeline consists of obtaining predictions for each text. This is the step where this package comes at use. After designing the prompts, now the last step before the analysis is that of obtaining the predictions from the LLM. This process uses OpenAI API to process every text in the dataset with GPT-40-mini, applying the same prompt consistently across all observations. Conceptually, the annotation process can be understood as the OpenAI API acting as a classification engine, taking in specific inputs and generating structured outputs.
 
-Put samples in `examples/`.
+#### INPUTS:
 
----
-
-## 6) Output schema (planned)
-A tidy table, one row per input text.
-
-| column              | type     | description                                   |
-|---------------------|----------|-----------------------------------------------|
-| `id`                | string   | source id (optional; auto-generated if empty) |
-| `text`              | string   | original snippet                              |
-| `topic`             | string   | topic label used                              |
-| `character_id`      | string   | from character schema                         |
-| `is_present`        | boolean  | presence flag                                 |
-| `role`              | string   | critic/supporter/neutral/none                 |
-| `model`             | string   | model name used                               |
-| `prompt_version`    | string   | hash/tag of prompt                            |
-| `run_at`            | datetime | timestamp                                     |
+#### OUTPUTS:
 
 ---
 
