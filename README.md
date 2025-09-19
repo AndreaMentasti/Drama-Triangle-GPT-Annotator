@@ -7,8 +7,9 @@
 ---
 
 ## ✨ What this tool will do
-- **Input:** small snippets of text (tweets, newspaper lines, TV transcript segments) + **prompts** describing what to annotate.
-- **Output:** a dataset with the original text and added columns indicating **which characters are present** and **their roles** (e.g., critic/supporter/neutral).
+This package provides an interface to the OpenAI API for text classification tasks. Following Gehring & Grigoletto (2025), it enables annotation of text snippets using the Drama Triangle framework, identifying characters and assigning them to predefined roles.
+- **Input:** small snippets of text (tweets, newspaper lines, TV transcript segments) + **prompts** describing instructions for the GPT calls.
+- **Output:** a dataset with the original text and added columns indicating **which characters are present** and **their roles** (e.g., hero/victim/villain).
 
 ---
 
