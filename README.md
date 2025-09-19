@@ -1,13 +1,11 @@
 # Drama-Triangle-GPT-Annotator
 > Annotate text (tweets, news, transcripts) using GPT prompts to detect characters and roles.
 
-> **Status:** planning the project & collecting requirements.  
-> **Goal:** a light, reproducible pipeline for topic/character extraction and role labeling.
+# Why `{DT GPT Annotator}`?
 
----
+Distributing a Python package for GPT-based annotation using the Drama Triangle framework would provide researchers and practitioners with a scalable, transparent, and reproducible way to analyze political and social narratives. Political and social debates often take place in messy formats like tweets, interviews, or news articles, where multiple voices compete and traditional tools struggle to capture the underlying dynamics. The Drama Triangle offers a parsimonious yet expressive schema, collapsing complex identities into the archetypal roles of **hero**, **villain**, and **victim**, which appear consistently across stories and media. By wrapping this logic into a package, users can systematically detect characters and their roles across large corpora, turning raw text into structured outputs that are immediately usable for statistical analysis. This makes it possible to study not only what topics are being discussed, but also how they are framed and who is assigned credit or blame. Such a tool would lower entry barriers for narrative analysis, enable comparability across topics and contexts, and open up new avenues for understanding virality and polarization in political communication.
 
-## ✨ What this tool will do
-This package provides an interface to the OpenAI API for text classification tasks. Following Gehring & Grigoletto (2025), it enables annotation of text snippets using the Drama Triangle framework, identifying characters and assigning them to predefined roles.
+In practice, this package provides an interface to the OpenAI API for text classification tasks. Following Gehring & Grigoletto (2025), it enables annotation of text snippets using the Drama Triangle framework, identifying characters and assigning them to predefined roles. 
 - **Input:** small snippets of text (tweets, newspaper lines, TV transcript segments) + **prompts** describing instructions for the GPT calls.
 - **Output:** a dataset with the original text and added columns indicating **which characters are present** and **their roles** (e.g., hero/victim/villain).
 
