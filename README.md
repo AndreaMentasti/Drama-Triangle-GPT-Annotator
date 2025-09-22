@@ -101,25 +101,6 @@ The final step of the pipeline consists of obtaining predictions for each text. 
 
 ---
 
-## 8) Roadmap
-- [ ] Define topic & character schema  
-- [ ] Create prompt set (presence + role)  
-- [ ] Sample dataset & evaluation split  
-- [ ] Minimal CLI for batch annotation  
-- [ ] Metrics & error analysis notebook  
-- [ ] First public release
-
----
-
-## FAQ
-**Q:** Does it store my texts on external servers?  
-**A:** It will call an LLM provider to generate annotations. We’ll document options, caching, and redaction.
-
-**Q:** Can it detect new characters automatically?  
-**A:** Planned as an optional discovery step.
-
----
-
 ## Contributing
 Discussions and issue templates will appear soon. For now, feel free to open an issue with ideas or edge cases.
 
